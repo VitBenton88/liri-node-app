@@ -1,5 +1,6 @@
 var keys = require("./keys.js");
 var request = require('request');
+var Spotify = require('node-spotify-api');
 
 //twitter keys:
 var twitterConsumerKey = keys.twitterKeys.consumer_key;
@@ -16,11 +17,17 @@ var position2 = process.argv[2];
 var position3 = process.argv[3];
 var position4 = process.argv[4];
 
+//command keywords:
+var movieCommand = 'movie-this';
+var songCommand = 'spotify-this-song';
+var twitterCommand = 'my-tweets';
+var doCommand = 'do-what-it-says';
+
 //---------------------------------------------------------------
 
 //OMDB_API:
 
-if (position2 == "movie-this"){//when the movie command is executed ...
+if (position2 == movieCommand){//when the movie command is executed ...
 
 	var titleArray = [];
 
@@ -37,8 +44,8 @@ if (position2 == "movie-this"){//when the movie command is executed ...
 		var movie = { // collect necessary values from JSON
 	  	  title: cleanResponse.Title,
 		  year: cleanResponse.Year,
-		  ratingIMDB: cleanResponse.Ratings[0].Value,
-		  ratingRT: cleanResponse.Ratings[1].Value,
+		  rating_IMDB: cleanResponse.Ratings[0].Value,
+		  rating_RottonTomoatoes: cleanResponse.Ratings[1].Value,
 		  country: cleanResponse.Country,
 		  language: cleanResponse.Language,
 		  plot: cleanResponse.Plot,
@@ -51,3 +58,42 @@ if (position2 == "movie-this"){//when the movie command is executed ...
 
 };
 
+//---------------------------------------------------------------
+
+//SPOTIFY:
+
+if (position2 == songCommand){//when the movie command is executed ...
+
+	var songArray = [];
+
+	for (var i = 3; i < process.argv.length; i++) {//loop through all posiitons to collect title, if title > one word
+		songArray.push(process.argv[i]);
+	}
+
+	var spotify = new Spotify({
+	  id: spotConsumerKey,
+	  secret: spotConsumerSecret,
+	});
+
+	spotify
+	  .search({ type: 'track', query: songArray.join(" ") })
+	  .then(function(response) {
+
+	// var song = { // collect necessary values from JSON
+ //  	  title: response.Title,
+	//   year: response.Year,
+	//   rating_IMDB: response.Ratings[0].Value,
+	//   rating_RottonTomoatoes: response.Ratings[1].Value,
+	//   country: response.Country,
+	//   language: response.Language,
+	//   plot: response.Plot,
+	//   actors: response.Actors,
+	// }
+
+	  	console.log(response);//log to console movie object
+
+	});
+
+};
+
+//---------------------------------------------------------------
