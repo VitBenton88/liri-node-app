@@ -2,6 +2,7 @@ var keys = require("./keys.js");
 var request = require('request');
 var Spotify = require('node-spotify-api');
 var Twitter = require('twitter');
+var fs = require("fs");
 
 //twitter keys:
 var twitterConsumerKey = keys.twitterKeys.consumer_key;
@@ -16,7 +17,6 @@ var spotConsumerSecret = keys.spotifyKeys.client_secret;
 //command line positions:
 var position2 = process.argv[2];
 var position3 = process.argv[3];
-var position4 = process.argv[4];
 
 //command keywords:
 var movieCommand = 'movie-this';
@@ -68,9 +68,11 @@ if (position2 == movieCommand){//when the movie command is executed ...
 if (position2 == songCommand){//when the movie command is executed ...
 
 	var songArray = [];
+	var song = "";
 
 	for (var i = 3; i < process.argv.length; i++) {//loop through all posiitons to collect title, if title > one word
 		songArray.push(process.argv[i]);
+		song = songArray.join(" ");//clean up songArray if song title contains multiple words
 	}
 
 	var spotify = new Spotify({
@@ -78,26 +80,50 @@ if (position2 == songCommand){//when the movie command is executed ...
 	  secret: spotConsumerSecret,
 	});
 
-	spotify
-	  .search({ type: 'track', query: songArray.join(" "), limit: 1 })
-	  .then(function(response) {
+	if (song == ""){//If no song is provided then search "The Sign" by Ace of Base.
 
-	  	var path = response.tracks.items[0];//capture path for easy re-use
+		spotify
+		  .search({ type: 'track', query: "Ace of Base", limit: 3 })
+		  .then(function(response, error) {
 
-	console.log("###############################################\r\n");//log seperator for readability
+		  var path = response.tracks.items[2];//capture path for easy re-use
 
-		console.log(//log pertinent details from OMDB JSON
-	  	  "Artist(s): " + path.artists[0].name + "\r\n" +
-		  "Song Name: " + path.name + "\r\n" +
-		  "Preview Link: " + path.href + "\r\n" +
-		  "Album: " + path.album.name + "\r\n"
+		console.log("###############################################\r\n");//log seperator for readability
 
-		);
+			console.log(//log pertinent details from OMDB JSON
+		  	  "Artist(s): " + path.artists[0].name + "\r\n" +
+			  "Song Name: " + path.name + "\r\n" +
+			  "Preview Link: " + path.href + "\r\n" +
+			  "Album: " + path.album.name + "\r\n"
 
-	console.log("###############################################");//log seperator for readability
+			);
 
-	});
+		console.log("###############################################");//log seperator for readability
 
+		});
+	}
+
+	else {
+		spotify
+		  .search({ type: 'track', query: song, limit: 1 })
+		  .then(function(response, error) {
+
+		  var path = response.tracks.items[0];//capture path for easy re-use
+
+		console.log("###############################################\r\n");//log seperator for readability
+
+			console.log(//log pertinent details from OMDB JSON
+		  	  "Artist(s): " + path.artists[0].name + "\r\n" +
+			  "Song Name: " + path.name + "\r\n" +
+			  "Preview Link: " + path.href + "\r\n" +
+			  "Album: " + path.album.name + "\r\n"
+
+			);
+
+		console.log("###############################################");//log seperator for readability
+
+		});
+	};
 };
 
 //---------------------------------------------------------------
@@ -141,3 +167,5 @@ if (position2 == twitterCommand){//when the twitter command is executed ...
 };
 
 //---------------------------------------------------------------
+
+//DO:
