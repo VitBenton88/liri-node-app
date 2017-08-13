@@ -1,6 +1,7 @@
 var keys = require("./keys.js");
 var request = require('request');
 var Spotify = require('node-spotify-api');
+var Twitter = require('twitter');
 
 //twitter keys:
 var twitterConsumerKey = keys.twitterKeys.consumer_key;
@@ -25,7 +26,7 @@ var doCommand = 'do-what-it-says';
 
 //---------------------------------------------------------------
 
-//OMDB_API:
+//OMDB:
 
 if (position2 == movieCommand){//when the movie command is executed ...
 
@@ -81,7 +82,7 @@ if (position2 == songCommand){//when the movie command is executed ...
 	  .search({ type: 'track', query: songArray.join(" "), limit: 1 })
 	  .then(function(response) {
 
-	  	var path = response.tracks.items[0];
+	  	var path = response.tracks.items[0];//capture path for easy re-use
 
 	console.log("###############################################\r\n");//log seperator for readability
 
@@ -94,6 +95,46 @@ if (position2 == songCommand){//when the movie command is executed ...
 		);
 
 	console.log("###############################################");//log seperator for readability
+
+	});
+
+};
+
+//---------------------------------------------------------------
+
+//TWITTER:
+
+if (position2 == twitterCommand){//when the twitter command is executed ...
+
+	var client = new Twitter({
+  		consumer_key: twitterConsumerKey,
+	    consumer_secret: twitterConsumerSecret,
+	    access_token_key: twitterAccessTokenKey,
+	    access_token_secret: twitterAccessTokenSecret
+	});
+
+	client.get('statuses/user_timeline', function(error, tweets) {
+
+		if(error) throw error;
+
+		console.log("###############################################\r\n");//log seperator for readability
+
+	    for (i = 0; i < tweets.length ; i++) {//loop through each position of the tweet array
+
+	    	var tweetNum = i + 1; //store correct tweet number for display purposes
+
+	    	if (i === 0) {//if tweet #1 is posted, clarify that this is the most recent tweet
+
+	    		console.log("Tweet #1 (Most Recent): " + tweets[i].text + "\r\n");
+	    	}
+
+	    	else {//otherwise list normally
+
+	    		console.log("Tweet #" + tweetNum + ": " + tweets[i].text + "\r\n");
+	    	};
+	    }
+
+		 console.log("###############################################\r\n");//log seperator for readability
 
 	});
 
