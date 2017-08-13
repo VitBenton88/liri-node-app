@@ -41,18 +41,20 @@ if (position2 == movieCommand){//when the movie command is executed ...
 
 		var cleanResponse = JSON.parse(body);//convert body to object
 
-		var movie = { // collect necessary values from JSON
-	  	  title: cleanResponse.Title,
-		  year: cleanResponse.Year,
-		  rating_IMDB: cleanResponse.Ratings[0].Value,
-		  rating_RottonTomoatoes: cleanResponse.Ratings[1].Value,
-		  country: cleanResponse.Country,
-		  language: cleanResponse.Language,
-		  plot: cleanResponse.Plot,
-		  actors: cleanResponse.Actors,
-		}
+		console.log("###############################################\r\n");//log seperator for readability
 
-	  	console.log(movie);//log to console movie object
+		console.log(//log pertinent details from OMDB JSON
+	  	  "Movie Title: " + cleanResponse.Title + "\r\n" +
+		  "Year: " + cleanResponse.Year + "\r\n" +
+		  "IMDB Rating: " + cleanResponse.Ratings[0].Value + "\r\n" + 
+		  "Rotton Tomoatoes Rating: " + cleanResponse.Ratings[1].Value + "\r\n" +
+		  "Country: " + cleanResponse.Country + "\r\n" +
+		  "Language: " + cleanResponse.Language + "\r\n" +
+		  "Plot: " + cleanResponse.Plot + "\r\n" +
+		  "Actors/Actresses: " + cleanResponse.Actors + "\r\n"
+		);
+
+	  	console.log("###############################################");//log seperator for readability
 
 	});
 
@@ -76,21 +78,22 @@ if (position2 == songCommand){//when the movie command is executed ...
 	});
 
 	spotify
-	  .search({ type: 'track', query: songArray.join(" ") })
+	  .search({ type: 'track', query: songArray.join(" "), limit: 1 })
 	  .then(function(response) {
 
-	// var song = { // collect necessary values from JSON
- //  	  title: response.Title,
-	//   year: response.Year,
-	//   rating_IMDB: response.Ratings[0].Value,
-	//   rating_RottonTomoatoes: response.Ratings[1].Value,
-	//   country: response.Country,
-	//   language: response.Language,
-	//   plot: response.Plot,
-	//   actors: response.Actors,
-	// }
+	  	var path = response.tracks.items[0];
 
-	  	console.log(response);//log to console movie object
+	console.log("###############################################\r\n");//log seperator for readability
+
+		console.log(//log pertinent details from OMDB JSON
+	  	  "Artist(s): " + path.artists[0].name + "\r\n" +
+		  "Song Name: " + path.name + "\r\n" +
+		  "Preview Link: " + path.href + "\r\n" +
+		  "Album: " + path.album.name + "\r\n"
+
+		);
+
+	console.log("###############################################");//log seperator for readability
 
 	});
 
