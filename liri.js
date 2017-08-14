@@ -203,7 +203,42 @@ else if (position2 == doCommand){//when the do command is executed ...
 	      return console.error(err);
 	   };
 
-	   console.log(data);
+	   var dataArray = data.split(',');//convert string in .txt file to array
+
+	   for (i = 0; i < dataArray.length; i++) {//loop through dataArray
+
+	   		var keyword = dataArray[i + 1];//capture query keyword which should always follow command in the array
+
+	   		if (dataArray[i] == songCommand){//if the song command is found, initiate spotify module
+
+	   			var spotify = new Spotify({
+				  id: spotConsumerKey,
+				  secret: spotConsumerSecret,
+				});
+
+	   			spotify
+				  .search({ type: 'track', query: keyword, limit: 1 })
+				  .then(function(response, error) {
+
+				  var path = response.tracks.items[0];//capture path for easy re-use
+
+				console.log("###############################################\r\n");//log seperator for readability
+
+					console.log(//log pertinent details from OMDB JSON
+				  	  "Artist(s): " + path.artists[0].name + "\r\n" +
+					  "Song Name: " + path.name + "\r\n" +
+					  "Preview Link: " + path.href + "\r\n" +
+					  "Album: " + path.album.name + "\r\n"
+
+					);
+
+				console.log("###############################################");//log seperator for readability
+
+				});
+
+	   		};
+
+	   };
 
 	});
 
@@ -230,7 +265,7 @@ else if (position2 === undefined){//when the do command is executed ...
 
 //---------------------------------------------------------------
 
-else {//when something that isn't the list of command is entered ...
+else {//when something that isn't in the list of commands is entered ...
 
 	   console.log("###############################################\r\n");//log seperator for readability
 
