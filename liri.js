@@ -31,41 +31,75 @@ var doCommand = 'do-what-it-says';
 if (position2 == movieCommand){//when the movie command is executed ...
 
 	var titleArray = [];
+	var movieTitle = "";
 
 	for (var i = 3; i < process.argv.length; i++) {//loop through all posiitons to collect title, if title > one word
 		titleArray.push(process.argv[i]);
+		movieTitle = titleArray.join(" ");
 	}
 
-	var queryURL = "http://www.omdbapi.com/?t=" + titleArray.join(" ") + "&y=&plot=short&apikey=40e9cece";//API query URL
+	var queryURL = "";//API query URL
+
+	if (movieTitle == ""){//If no movie title is provided then search the title 'Mr.Nobody'.
+
+		queryURL = "http://www.omdbapi.com/?t=Mr.Nobody&y=&plot=short&apikey=40e9cece";
+	}
+
+	else {
+
+		queryURL = "http://www.omdbapi.com/?t=" + movieTitle + "&y=&plot=short&apikey=40e9cece";
+
+	};
 
 	request(queryURL, function (error, response, body) {//reuqest API query URL
 
 		var cleanResponse = JSON.parse(body);//convert body to object
 
-		console.log("###############################################\r\n");//log seperator for readability
+		if (cleanResponse.Ratings.length > 1){//not all movies have a Rotton Tomatoes rating, this if statement checks for that to avoid an error
 
-		console.log(//log pertinent details from OMDB JSON
-	  	  "Movie Title: " + cleanResponse.Title + "\r\n" +
-		  "Year: " + cleanResponse.Year + "\r\n" +
-		  "IMDB Rating: " + cleanResponse.Ratings[0].Value + "\r\n" + 
-		  "Rotton Tomoatoes Rating: " + cleanResponse.Ratings[1].Value + "\r\n" +
-		  "Country: " + cleanResponse.Country + "\r\n" +
-		  "Language: " + cleanResponse.Language + "\r\n" +
-		  "Plot: " + cleanResponse.Plot + "\r\n" +
-		  "Actors/Actresses: " + cleanResponse.Actors + "\r\n"
-		);
+			console.log("###############################################\r\n");//log seperator for readability
 
-	  	console.log("###############################################");//log seperator for readability
+			console.log(//log pertinent details from OMDB JSON
+		  	  "Movie Title: " + cleanResponse.Title + "\r\n" +
+			  "Year: " + cleanResponse.Year + "\r\n" +
+			  "IMDB Rating: " + cleanResponse.Ratings[0].Value + "\r\n" + 
+			  "Rotton Tomoatoes Rating: " + cleanResponse.Ratings[1].Value + "\r\n" +
+			  "Country: " + cleanResponse.Country + "\r\n" +
+			  "Language: " + cleanResponse.Language + "\r\n" +
+			  "Plot: " + cleanResponse.Plot + "\r\n" +
+			  "Actors/Actresses: " + cleanResponse.Actors + "\r\n"
+			);
+
+		  	console.log("###############################################");//log seperator for readability
+			
+		}
+
+		else {
+
+			console.log("###############################################\r\n");//log seperator for readability
+
+			console.log(//log pertinent details from OMDB JSON
+		  	  "Movie Title: " + cleanResponse.Title + "\r\n" +
+			  "Year: " + cleanResponse.Year + "\r\n" +
+			  "IMDB Rating: " + cleanResponse.Ratings[0].Value + "\r\n" + 
+			  "Country: " + cleanResponse.Country + "\r\n" +
+			  "Language: " + cleanResponse.Language + "\r\n" +
+			  "Plot: " + cleanResponse.Plot + "\r\n" +
+			  "Actors/Actresses: " + cleanResponse.Actors + "\r\n"
+			);
+
+		  	console.log("###############################################");//log seperator for readability
+		 };
 
 	});
 
-};
+}
 
 //---------------------------------------------------------------
 
 //SPOTIFY:
 
-if (position2 == songCommand){//when the movie command is executed ...
+else if (position2 == songCommand){//when the movie command is executed ...
 
 	var songArray = [];
 	var song = "";
@@ -124,13 +158,13 @@ if (position2 == songCommand){//when the movie command is executed ...
 
 		});
 	};
-};
+}
 
 //---------------------------------------------------------------
 
 //TWITTER:
 
-if (position2 == twitterCommand){//when the twitter command is executed ...
+else if (position2 == twitterCommand){//when the twitter command is executed ...
 
 	var client = new Twitter({
   		consumer_key: twitterConsumerKey,
@@ -164,8 +198,22 @@ if (position2 == twitterCommand){//when the twitter command is executed ...
 
 	});
 
-};
+}
 
 //---------------------------------------------------------------
 
 //DO:
+
+else if (position2 == doCommand){//when the movie command is executed ...
+
+	fs.readFile('random.txt', 'utf8', function (err, data) {
+
+	   if (err) {
+	      return console.error(err);
+	   };
+
+	   position3 = data;
+
+	});
+
+};
