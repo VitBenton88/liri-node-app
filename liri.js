@@ -55,33 +55,25 @@ if (position2 == movieCommand){//when the movie command is executed ...
 
 		var cleanResponse = JSON.parse(body);//convert body to object
 
+		var rottonTomoatoesRating = "";
+
 		if (cleanResponse.Ratings.length > 1){//not all movies have a Rotton Tomatoes rating, this if statement checks for that to avoid an error
 
-			console.log("###############################################\r\n");//log seperator for readability
-
-			console.log(//log pertinent details from OMDB JSON
-		  	  "Movie Title: " + cleanResponse.Title + "\r\n" +
-			  "Year: " + cleanResponse.Year + "\r\n" +
-			  "IMDB Rating: " + cleanResponse.Ratings[0].Value + "\r\n" + 
-			  "Rotton Tomoatoes Rating: " + cleanResponse.Ratings[1].Value + "\r\n" +
-			  "Country: " + cleanResponse.Country + "\r\n" +
-			  "Language: " + cleanResponse.Language + "\r\n" +
-			  "Plot: " + cleanResponse.Plot + "\r\n" +
-			  "Actors/Actresses: " + cleanResponse.Actors + "\r\n"
-			);
-
-		  	console.log("###############################################");//log seperator for readability
-			
+			rottonTomoatoesRating = cleanResponse.Ratings[1].Value;
 		}
 
 		else {
 
-			console.log("###############################################\r\n");//log seperator for readability
+			rottonTomoatoesRating = "Unavailable";
+		};
+
+		 console.log("###############################################\r\n");//log seperator for readability
 
 			console.log(//log pertinent details from OMDB JSON
 		  	  "Movie Title: " + cleanResponse.Title + "\r\n" +
 			  "Year: " + cleanResponse.Year + "\r\n" +
 			  "IMDB Rating: " + cleanResponse.Ratings[0].Value + "\r\n" + 
+			  "Rotton Tomoatoes Rating: " + rottonTomoatoesRating + "\r\n" +
 			  "Country: " + cleanResponse.Country + "\r\n" +
 			  "Language: " + cleanResponse.Language + "\r\n" +
 			  "Plot: " + cleanResponse.Plot + "\r\n" +
@@ -89,7 +81,6 @@ if (position2 == movieCommand){//when the movie command is executed ...
 			);
 
 		  	console.log("###############################################");//log seperator for readability
-		 };
 
 	});
 
@@ -104,7 +95,7 @@ else if (position2 == songCommand){//when the movie command is executed ...
 	var songArray = [];
 	var song = "";
 
-	for (var i = 3; i < process.argv.length; i++) {//loop through all posiitons to collect title, if title > one word
+	for (var i = 3; i < process.argv.length; i++) {//loop through all positions to collect title, if title > one word
 		songArray.push(process.argv[i]);
 		song = songArray.join(" ");//clean up songArray if song title contains multiple words
 	}
@@ -114,7 +105,7 @@ else if (position2 == songCommand){//when the movie command is executed ...
 	  secret: spotConsumerSecret,
 	});
 
-	if (song == ""){//If no song is provided then search "The Sign" by Ace of Base.
+	if (song == ""){//If no song is provided then query "The Sign" by Ace of Base.
 
 		spotify
 		  .search({ type: 'track', query: "Ace of Base", limit: 3 })
@@ -204,7 +195,7 @@ else if (position2 == twitterCommand){//when the twitter command is executed ...
 
 //DO:
 
-else if (position2 == doCommand){//when the movie command is executed ...
+else if (position2 == doCommand){//when the do command is executed ...
 
 	fs.readFile('random.txt', 'utf8', function (err, data) {
 
@@ -212,8 +203,44 @@ else if (position2 == doCommand){//when the movie command is executed ...
 	      return console.error(err);
 	   };
 
-	   position3 = data;
+	   console.log(data);
 
 	});
+
+}
+
+//---------------------------------------------------------------
+
+//if nothing is entered:
+
+else if (position2 === undefined){//when the do command is executed ...
+
+	   console.log("###############################################\r\n");//log seperator for readability
+
+	   console.log("... but you didn't enter a command. Please choose from the following commands:\r\n" + 
+	   	"Enter '" + movieCommand + "' following a movie title.\r\n" +
+	   	"Enter '" + songCommand + "' following a song name.\r\n" +
+	   	"Enter '" + twitterCommand + "' to see my 20 most recent tweets.\r\n" +
+	   	"Enter '" + doCommand + "' to see some custom commands play out.\r\n"
+	   	);
+
+	   console.log("###############################################\r\n");//log seperator for readability
+
+}
+
+//---------------------------------------------------------------
+
+else {//when something that isn't the list of command is entered ...
+
+	   console.log("###############################################\r\n");//log seperator for readability
+
+	   console.log("You entered an incorrect command. Please choose from the following commands:\r\n" + 
+	   	"Enter '" + movieCommand + "' following a movie title.\r\n" +
+	   	"Enter '" + songCommand + "' following a song name.\r\n" +
+	   	"Enter '" + twitterCommand + "' to see my 20 most recent tweets.\r\n" +
+	   	"Enter '" + doCommand + "' to see some custom commands play out.\r\n"
+	   	);
+
+	   console.log("###############################################\r\n");//log seperator for readability
 
 };
