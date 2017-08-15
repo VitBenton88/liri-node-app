@@ -62,3 +62,53 @@ Album: The Hits--Chapter One
 
 ###############################################
 
+###############################################
+
+Movie Title: Jaws
+Year: 1975
+IMDB Rating: 8.0/10
+Rotton Tomoatoes Rating: 97%
+Country: USA
+Language: English
+Plot: A giant great white shark arrives on the shores of a New England beach resort and wreaks havoc with bloody attacks on swimmers, until a local sheriff teams up with a marine biologist and an old seafarer to hunt the monster down.
+Actors/Actresses: Roy Scheider, Robert Shaw, Richard Dreyfuss, Lorraine Gary
+
+###############################################
+
+###############################################
+
+Movie Title: Jaws
+Year: 1975
+IMDB Rating: 8.0/10
+Rotton Tomoatoes Rating: 97%
+Country: USA
+Language: English
+Plot: A giant great white shark arrives on the shores of a New England beach resort and wreaks havoc with bloody attacks on swimmers, until a local sheriff teams up with a marine biologist and an old seafarer to hunt the monster down.
+Actors/Actresses: Roy Scheider, Robert Shaw, Richard Dreyfuss, Lorraine Gary
+
+###############################################
+
+###############################################
+
+Tweet #1 (Most Recent): The 20th Tweet! THE END!
+Tweet #2: .. tweet ... number ... 19
+Tweet #3: tweet #18
+Tweet #4: t-t-t-t-t-t- TWEET #17
+Tweet #5: T-W-E-E-T # 16
+Tweet #6: Tweet #15
+Tweet #7: This is the fourteenth tweet!
+Tweet #8: This is tweet #13
+Tweet #9: Tweet #12
+Tweet #10: Tweet #11
+Tweet #11: Halfway there! Tweet #10!
+Tweet #12: Tweet #9!
+Tweet #13: Tweet # ... 8
+Tweet #14: Guess which tweet this is? It's tweet #7
+Tweet #15: Hey! It's tweet #6!
+Tweet #16: tweet 5
+Tweet #17: This is the fourth tweet!
+Tweet #18: Tweet #3
+Tweet #19: Tweet #2
+Tweet #20: Tweet #1
+###############################################
+

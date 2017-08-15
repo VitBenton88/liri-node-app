@@ -37,7 +37,11 @@ function log (dataToLog) {
 	console.log(dataToLog);
 
 	fs.appendFile('log.txt', dataToLog, 'utf8', function(err){//log pertinent movie info to log.txt
+
+		if (err){
 	 		return console.log(err);
+	 	}
+
 	});
 };
 
