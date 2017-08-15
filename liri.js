@@ -62,6 +62,7 @@ function spotifySearch (songName, objectIndex, queryLimit) {
 					       "Preview Link: " + path.href + "\r\n" +
 					       "Album: " + path.album.name + "\r\n\r\n" +
 					       seperator;
+
 		log(songString);//log pertinent song info to console and log.txt
 	});
 };
@@ -76,7 +77,7 @@ if (position2 == movieCommand){//when the movie command is executed ...
 	var movieTitle = "";
 	var queryURL = "";//API query URL
 
-	for (var i = 3; i < process.argv.length; i++) {//loop through all posiitons to collect title, if title > one word
+	for (var i = 3; i < process.argv.length; i++) {//loop through all positions to collect title, if title > one word
 		titleArray.push(process.argv[i]);
 		movieTitle = titleArray.join(" ");
 	}
