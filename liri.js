@@ -39,7 +39,33 @@ function log (dataToLog) {
 	fs.appendFile('log.txt', dataToLog, 'utf8', function(err){//log pertinent movie info to log.txt
 	 		return console.log(err);
 	});
-}; 
+};
+
+//fuction for querying song with spoitfy module:
+
+function spotifySearch (songName, objectIndex, queryLimit) {
+
+	var spotify = new Spotify({
+	  id: spotConsumerKey,
+	  secret: spotConsumerSecret,
+	});
+
+	spotify
+	  .search({ type: 'track', query: songName, limit: queryLimit })
+	  .then(function(response, error) {
+
+	  var path = response.tracks.items[objectIndex];//capture path for easy re-use
+
+	  var songString = seperator + 
+				   	   "Artist(s): " + path.artists[0].name + "\r\n" +
+				       "Song Name: " + path.name + "\r\n" +
+				       "Preview Link: " + path.href + "\r\n" +
+				       "Album: " + path.album.name + "\r\n\r\n" +
+				       seperator;
+
+		log(songString);//log pertinent song info to console and log.txt
+	});
+};
 
 //---------------------------------------------------------------
 
@@ -105,32 +131,6 @@ if (position2 == movieCommand){//when the movie command is executed ...
 //SPOTIFY:
 
 else if (position2 == songCommand){//when the movie command is executed ...
-
-	//fuction for querying song with spoitfy module:
-
-	function spotifySearch (songName, objectIndex, queryLimit) {
-
-		var spotify = new Spotify({
-		  id: spotConsumerKey,
-		  secret: spotConsumerSecret,
-		});
-
-		spotify
-		  .search({ type: 'track', query: songName, limit: queryLimit })
-		  .then(function(response, error) {
-
-		  var path = response.tracks.items[objectIndex];//capture path for easy re-use
-
-		  var songString = seperator + 
-					   	   "Artist(s): " + path.artists[0].name + "\r\n" +
-					       "Song Name: " + path.name + "\r\n" +
-					       "Preview Link: " + path.href + "\r\n" +
-					       "Album: " + path.album.name + "\r\n\r\n" +
-					       seperator;
-
-			log(songString);//log pertinent song info to console and log.txt
-		});
-	};
 
 	var songArray = [];
 	var song = "";
