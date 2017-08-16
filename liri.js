@@ -181,12 +181,12 @@ else if (position2 == twitterCommand){//when the twitter command is executed ...
 
 	    	if (i === 0) {//if tweet #1 is posted, clarify that this is the most recent tweet
 
-	    		log("Tweet #1 (Most Recent): " + tweets[i].text + "\r\n");
+	    		log("Tweet #1 (Most Recent): " + tweets[i].text + "\r\n" + "Date Created: " + tweets[i].created_at + "\r\n");
 	    	}
 
 	    	else {//otherwise list normally
 
-	    		log("Tweet #" + tweetNum + ": " + tweets[i].text + "\r\n");
+	    		log("Tweet #" + tweetNum + ": " + tweets[i].text + "\r\n" + "Date Created: " + tweets[i].created_at + "\r\n");
 	    	};
 	    }
 
